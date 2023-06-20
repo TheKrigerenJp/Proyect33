@@ -35,20 +35,20 @@ public class HelloApplication extends Application {
     public List<Nodo> nodes;
     private List<Circle> airplanes;
 
-    public List<Route> routes;
+    //private List<Route> routes;
 
 
     @Override
     public void start(Stage primaryStage) {
         GridPane gridPane = createGridPane();
         selectAndDrawShapes(gridPane);
-        drawAirplanes(gridPane);
-        drawRoutes(gridPane);
+        //drawAirplanes(gridPane);
+        //drawRoutes(gridPane);
         Scene scene = new Scene(gridPane);
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        animateAirplanes();
+        //animateAirplanes();
 
         printGraphInformation();
         printGraphPaths();
@@ -149,7 +149,7 @@ public class HelloApplication extends Application {
         label.setStyle("-fx-font-size: 10px;");
         return label;
     }
-
+/*
     private void drawAirplanes(GridPane gridPane) {
         airplanes = new ArrayList<>();
         for (Nodo node : nodes) {
@@ -234,6 +234,8 @@ public class HelloApplication extends Application {
 
         return timeline;
     }
+
+ */
 
     private void printGraphInformation() {
         System.out.println("Figures:");
@@ -498,9 +500,7 @@ public class HelloApplication extends Application {
         return neighboringRoutes;
     }
 */
-    /**
-     * Clase AVION
-     */
+    /*
     public class Airplane {
         private final String name;
         private final Nodo airport;
@@ -578,8 +578,9 @@ public class HelloApplication extends Application {
             System.out.println("\nJourney completed!");
             System.out.println("Remaining fuel: " + fuel);
         }
-    }
+    }*/
 
+    /*
     public class AirplaneFactory {
         public Airplane createAirplane(String type, Nodo airport) {
             if (type.equalsIgnoreCase("Airbus A380") && airport.getAvailableSlots() > 0) {
@@ -653,8 +654,9 @@ public class HelloApplication extends Application {
             }
         }
     }
+     */
 
-
+/*
     private Route findRoute(Nodo previous, Nodo current) {
         for (Route route : routes) {
             if (route.getStartNode().equals(previous) && route.getEndNode().equals(current)) {
@@ -684,7 +686,7 @@ public class HelloApplication extends Application {
             node.setFuel(availableFuel % totalPlanes);
         }
     }
-
+*/
     public static void main(String[] args) {
         launch(args);
     }
