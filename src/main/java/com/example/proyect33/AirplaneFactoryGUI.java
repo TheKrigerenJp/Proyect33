@@ -70,8 +70,7 @@ public class AirplaneFactoryGUI {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 AirplaneFactoryGUI gui = new AirplaneFactoryGUI();
-                gui.airplanes = new Airplane[10]; // Reemplaza "10" con el tamaño deseado del arreglo de aviones
-                // Aquí puedes inicializar el arreglo de aviones con los aviones que desees mostrar
+                gui.airplanes = new Airplane[5];
             }
         });
     }
