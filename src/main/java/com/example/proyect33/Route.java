@@ -62,10 +62,12 @@ public class Route {
 
         for (int i = 0; i < numNodes; i++) {
             randomNumber = random.nextInt(HelloApplication.nodes.size() - min +1);
+            System.out.println("i:"+randomNumber);
             Nodo startNode = HelloApplication.nodes.get(randomNumber);
 
             for (int j = i + 1; j < numNodes; j++) {
                 randomNumber = random.nextInt(HelloApplication.nodes.size() - min +1);
+                System.out.println("j:"+randomNumber);
                 Nodo endNode = HelloApplication.nodes.get(randomNumber);
 
                 String type = getRandomRouteType();

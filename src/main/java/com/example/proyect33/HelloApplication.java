@@ -27,14 +27,13 @@ public class HelloApplication extends Application {
 
     private static final int ROWS = 15;
     private static final int COLUMNS = 25;
-    private static final int RECT_WIDTH = 35;
-    private static final int RECT_HEIGHT = 40;
+    private static final int RECT_WIDTH = 25;
+    private static final int RECT_HEIGHT = 30;
     private static final Color GRAY_COLOR = Color.GRAY;
 
-    private Random random;
+    private static Random random;
     public static List<Nodo> nodes;
     private List<Circle> airplanes;
-
     public static List<Route> routes = new ArrayList<>();
 
 
@@ -79,7 +78,7 @@ public class HelloApplication extends Application {
         return rectangle;
     }
 
-    private void selectAndDrawShapes(GridPane gridPane) {
+    private static void selectAndDrawShapes(GridPane gridPane) {
         random = new Random();
         int selectedCells = random.nextInt(10 - 6 + 1) + 6;
 
@@ -94,10 +93,10 @@ public class HelloApplication extends Application {
             } else {
                 i--;
             }
-        }
+        }System.out.println(nodes);
     }
 
-    private boolean isCoordinateSelected(String coordinate) {
+    private static boolean isCoordinateSelected(String coordinate) {
         for (Nodo node : nodes) {
             String selectedCoordinate = node.getRow() + "-" + node.getCol();
             if (selectedCoordinate.equals(coordinate)) {
@@ -107,7 +106,7 @@ public class HelloApplication extends Application {
         return false;
     }
 
-    private void drawShape(GridPane gridPane, int row, int col, int number) {
+    private static void drawShape(GridPane gridPane, int row, int col, int number) {
         Rectangle rectangle = (Rectangle) gridPane.getChildren().get(row * COLUMNS + col);
 
         if (rectangle.getFill().equals(Color.GREEN)) {
@@ -122,7 +121,7 @@ public class HelloApplication extends Application {
         gridPane.add(label, col, row);
     }
 
-    private Polygon createTriangle() {
+    private static Polygon createTriangle() {
         Polygon triangle = new Polygon();
         triangle.getPoints().addAll(
                 0.0, 0.0,
@@ -133,7 +132,7 @@ public class HelloApplication extends Application {
         return triangle;
     }
 
-    private Polygon createRhombus() {
+    private static Polygon createRhombus() {
         Polygon rhombus = new Polygon();
         rhombus.getPoints().addAll(
                 RECT_WIDTH / 2.0, 0.0,
@@ -145,7 +144,7 @@ public class HelloApplication extends Application {
         return rhombus;
     }
 
-    private Label createLabel(String text) {
+    private static Label createLabel(String text) {
         Label label = new Label(text);
         label.setStyle("-fx-font-size: 10px;");
         return label;
@@ -169,26 +168,46 @@ public class HelloApplication extends Application {
     }
 
     private void drawRoutes(GridPane gridPane) {
+        System.out.println("aca aca");
+        /*Nodo node1 = routes.get(0).getStartNode();
+        Nodo node2 =  routes.get(0).getEndNode();
+        Line routeLine = createRouteLine(node1.getRow(), node1.getCol(), node2.getRow(), node2.getCol());
+        //Line routeLine = createRouteLine(50, 50, 300, 300);
+        GridPane.setConstraints(routeLine, (node1.getCol() + node2.getCol())/2 , (node1.getRow() + node2.getRow())/2, gridPane.getColumnCount(), gridPane.getRowCount(), HPos.LEFT, VPos.TOP);
+        gridPane.getChildren().add(routeLine);*/
         for (Route route: routes) {
             Nodo node1 = route.getStartNode();
             Nodo node2 = route.getEndNode();
             Line routeLine = createRouteLine(node1.getRow(), node1.getCol(), node2.getRow(), node2.getCol());
-            GridPane.setConstraints(routeLine, 0, 0, gridPane.getColumnCount(), gridPane.getRowCount(), HPos.CENTER, VPos.CENTER);
+            GridPane.setConstraints(routeLine, (node1.getCol() + node2.getCol())/2 , (node1.getRow() + node2.getRow())/2, gridPane.getColumnCount(), gridPane.getRowCount()); //HPos.CENTER, VPos.CENTER);
             gridPane.getChildren().add(routeLine);
+
         }
+
+
     }
 
 
     private Line createRouteLine(int row1, int col1, int row2, int col2) {
         double startX = col1 * RECT_WIDTH + RECT_WIDTH / 2.0;
+        System.out.println("Inicio x" + startX);
         double startY = row1 * RECT_HEIGHT + RECT_HEIGHT / 2.0;
+        System.out.println("Inicio y" + startY);
         double endX = col2 * RECT_WIDTH + RECT_WIDTH / 2.0;
+        System.out.println("Final x" + endX);
         double endY = row2 * RECT_HEIGHT + RECT_HEIGHT / 2.0;
+        System.out.println("Final y" + endY);
 
-        Line routeLine = new Line(startX, startY, endX, endY);
+        Line routeLine = new Line();
+        routeLine.setStartX(startX);
+        routeLine.setStartY(startY);
+        routeLine.setEndX(endX);
+        routeLine.setEndY(endY);
         routeLine.setStroke(Color.ORANGE);
         return routeLine;
     }
+
+
 
     private void animateAirplanes() {
         for (int i = 0; i < nodes.size(); i++) {
@@ -211,8 +230,8 @@ public class HelloApplication extends Application {
         for (int i = 0; i < nodes.size(); i++) {
             if (i != nodes.indexOf(node)) {
                 Nodo targetNode = nodes.get(i);
-                Line routeLine = createRouteLine(node.getRow(), node.getCol(), targetNode.getRow(), targetNode.getCol());
-                routes.add(routeLine);
+                //Line routeLine = createRouteLine(node.getRow(), node.getCol(), targetNode.getRow(), targetNode.getCol());
+               // routes.add(routeLine);
             }
         }
         return routes;
