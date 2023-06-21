@@ -1,12 +1,17 @@
 package com.example.proyect33;
 import javax.swing.*;
-
+/**
+ * Clase que representa una interfaz gráfica de una fábrica de aviones.
+ */
 public class AirplaneFactoryGUI {
     private JFrame frame;
     private AirplaneFactory airplaneFactory;
     private Airplane[] airplanes;
     private JTextArea outputTextArea;
-
+    /**
+     * Constructor de la clase AirplaneFactoryGUI.
+     * Inicializa una instancia de la fábrica de aviones y crea la interfaz gráfica.
+     */
     public AirplaneFactoryGUI() {
         airplaneFactory = new AirplaneFactory();
 
