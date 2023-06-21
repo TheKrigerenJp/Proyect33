@@ -21,7 +21,7 @@ import javafx.util.Duration;
 import java.util.*;
 
 /**
- * Clase main
+ * Genera una interfaz gráfica basada en cuadrículas con formas, rutas y aviones animados.
  */
 public class HelloApplication extends Application {
 
@@ -37,7 +37,10 @@ public class HelloApplication extends Application {
 
     public static List<Route> routes = new ArrayList<>();
 
-
+    /**
+     *El punto de entrada de la aplicación JavaFX.
+     * @param primaryStage
+     */
     @Override
     public void start(Stage primaryStage) {
         GridPane gridPane = createGridPane();
@@ -55,6 +58,10 @@ public class HelloApplication extends Application {
 
     }
 
+    /**
+     * Crea el gridPane
+     * @return
+     */
     private GridPane createGridPane() {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(1);
@@ -70,6 +77,10 @@ public class HelloApplication extends Application {
         return gridPane;
     }
 
+    /**
+     * Crea un rectángulo con color de relleno aleatorio
+     * @return
+     */
     private Rectangle createRectangle() {
         Rectangle rectangle = new Rectangle(RECT_WIDTH, RECT_HEIGHT);
         rectangle.setFill(Math.random() < 0.5 ? Color.GREEN : Color.BLUE);
@@ -79,6 +90,11 @@ public class HelloApplication extends Application {
         return rectangle;
     }
 
+    /**
+     *
+     Selecciona y dibuja formas en el panel de cuadrícula.
+     * @param gridPane
+     */
     private void selectAndDrawShapes(GridPane gridPane) {
         random = new Random();
         int selectedCells = random.nextInt(10 - 6 + 1) + 6;
@@ -97,6 +113,11 @@ public class HelloApplication extends Application {
         }
     }
 
+    /**
+     * Comprueba si ya se ha seleccionado una coordenada para una forma.
+     * @param coordinate
+     * @return
+     */
     private boolean isCoordinateSelected(String coordinate) {
         for (Nodo node : nodes) {
             String selectedCoordinate = node.getRow() + "-" + node.getCol();
@@ -107,6 +128,13 @@ public class HelloApplication extends Application {
         return false;
     }
 
+    /**
+     * Dibuja una forma en el Gridpane.
+     * @param gridPane
+     * @param row
+     * @param col
+     * @param number
+     */
     private void drawShape(GridPane gridPane, int row, int col, int number) {
         Rectangle rectangle = (Rectangle) gridPane.getChildren().get(row * COLUMNS + col);
 
@@ -122,6 +150,10 @@ public class HelloApplication extends Application {
         gridPane.add(label, col, row);
     }
 
+    /**
+     * crea un triangulo
+     * @return
+     */
     private Polygon createTriangle() {
         Polygon triangle = new Polygon();
         triangle.getPoints().addAll(
@@ -133,6 +165,10 @@ public class HelloApplication extends Application {
         return triangle;
     }
 
+    /**
+     * crea un rombo
+     * @return
+     */
     private Polygon createRhombus() {
         Polygon rhombus = new Polygon();
         rhombus.getPoints().addAll(
@@ -145,12 +181,21 @@ public class HelloApplication extends Application {
         return rhombus;
     }
 
+    /**
+     * crea un texto con el texto recibido
+     * @param text
+     * @return
+     */
     private Label createLabel(String text) {
         Label label = new Label(text);
         label.setStyle("-fx-font-size: 10px;");
         return label;
     }
 
+    /**
+     * Se ponen los aviones vizualmente en el gridPane
+     * @param gridPane
+     */
     private void drawAirplanes(GridPane gridPane) {
         airplanes = new ArrayList<>();
         for (Nodo node : nodes) {
@@ -160,6 +205,12 @@ public class HelloApplication extends Application {
         }
     }
 
+    /**
+     * Crea los aviones
+     * @param row
+     * @param col
+     * @return
+     */
     private Circle createAirplane(int row, int col) {
         Circle airplane = new Circle(5, Color.YELLOWGREEN);
         airplane.setStroke(Color.BLACK);
@@ -168,6 +219,10 @@ public class HelloApplication extends Application {
         return airplane;
     }
 
+    /**
+     * dibuja las rutas en el gridpane
+     * @param gridPane
+     */
     private void drawRoutes(GridPane gridPane) {
         for (Route route: routes) {
             Nodo node1 = route.getStartNode();
@@ -178,7 +233,14 @@ public class HelloApplication extends Application {
         }
     }
 
-
+    /**
+     * Crea una línea que representa una ruta entre dos nodos.
+     * @param row1
+     * @param col1
+     * @param row2
+     * @param col2
+     * @return
+     */
     private Line createRouteLine(int row1, int col1, int row2, int col2) {
         double startX = col1 * RECT_WIDTH + RECT_WIDTH / 2.0;
         double startY = row1 * RECT_HEIGHT + RECT_HEIGHT / 2.0;
@@ -190,6 +252,9 @@ public class HelloApplication extends Application {
         return routeLine;
     }
 
+    /**
+     * Anima los aviones a lo largo de sus rutas.
+     */
     private void animateAirplanes() {
         for (int i = 0; i < nodes.size(); i++) {
             Nodo node = nodes.get(i);
@@ -205,7 +270,12 @@ public class HelloApplication extends Application {
     }
 
 
-
+    /**
+     *
+     Recupera las rutas para un nodo determinado.
+     * @param node
+     * @return
+     */
     private List<Line> getRoutesForNode(Nodo node) {
         List<Line> routes = new ArrayList<>();
         for (int i = 0; i < nodes.size(); i++) {
@@ -218,6 +288,12 @@ public class HelloApplication extends Application {
         return routes;
     }
 
+    /**
+     * Crea una línea de tiempo para animar un avión a lo largo de sus rutas.
+     * @param airplane
+     * @param routes
+     * @return
+     */
     private Timeline createAnimationTimeline(Circle airplane, List<Line> routes) {
         Timeline timeline = new Timeline();
 
@@ -238,7 +314,10 @@ public class HelloApplication extends Application {
         return timeline;
     }
 
-
+    /**
+     *
+     Imprime información sobre las figuras
+     */
 
     private void printGraphInformation() {
         System.out.println("Figures:");
@@ -247,6 +326,9 @@ public class HelloApplication extends Application {
         }
     }
 
+    /**
+     * Imprime información sobre las rutas.
+     */
     private void printGraphPaths() {
         System.out.println("Paths:");
         for (int i = 0; i < nodes.size(); i++) {

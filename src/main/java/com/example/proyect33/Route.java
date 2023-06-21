@@ -2,6 +2,9 @@ package com.example.proyect33;
 
 import java.util.*;
 
+/**
+ * Clase que representa una Ruta de los aviones.
+ */
 public class Route {
     private final Nodo startNode;
     private final Nodo endNode;
@@ -10,6 +13,12 @@ public class Route {
     public static List<Nodo> nodes;
     private int danger;
 
+    /**
+     * constructor
+     * @param startNode
+     * @param endNode
+     * @param type
+     */
     public Route(Nodo startNode, Nodo endNode, String type) {
         this.startNode = startNode;
         this.endNode = endNode;
@@ -19,41 +28,77 @@ public class Route {
 
     }
 
+    /**
+     * Establece el peso de la Ruta.
+     * @param weight
+     */
     public void setWeight(int weight) {
         this.weight = weight;
     }
 
+    /**
+     * Incrementa el nivel de peligro de la Ruta.
+     */
     public void increaseDanger() {
         this.danger += 1;
     }
 
+    /**
+     * Decrementa el nivel de peligro de la Ruta.
+     */
     public void decreaseDanger() {
         this.danger += 1;
     }
 
+    /**
+     * Obtiene el Nodo de inicio de la Ruta.
+     * @return
+     */
     public Nodo getStartNode() {
         return startNode;
     }
 
+    /**
+     * Obtiene el Nodo de fin de la Ruta.
+     * @return
+     */
     public Nodo getEndNode() {
         return endNode;
     }
 
+    /**
+     * Obtiene el peso de la Ruta.
+     * @return
+     */
     public int getWeight() {
         return weight;
     }
 
+    /**
+     * Obtiene el tipo de la Ruta.
+     * @return
+     */
     public String getType() {
         return type;
     }
 
-
+    /**
+     * Lista estática de rutas.
+     */
     public static List<Route> routes;
 
+    /**
+     * Agrega un Nodo a la lista de nodos.
+     * @param node
+     */
     public void addNode(Nodo node) {
         nodes.add(node);
     }
 
+    /**
+     *
+     Genera rutas aleatorias.
+     */
     public static void generateRandomRoutes() {
         Random random = new Random();
         int min = 1;
@@ -77,6 +122,10 @@ public class Route {
         }
     }
 
+    /**
+     * Obtiene un tipo de ruta aleatorio.
+     * @return
+     */
     private static String getRandomRouteType() {
         String[] routeTypes = {"Continental", "Interoceanica"};
         Random random = new Random();
@@ -84,12 +133,24 @@ public class Route {
         return routeTypes[index];
     }
 
+    /**
+     * Calcula la distancia entre dos puntos en un plano.
+     * @param row1
+     * @param col1
+     * @param row2
+     * @param col2
+     * @return
+     */
     public static double calculateDistance(int row1, int col1, int row2, int col2) {
         int dx = Math.abs(col2 - col1);
         int dy = Math.abs(row2 - row1);
         return Math.sqrt(dx * dx + dy * dy);
     }
 
+    /**
+     * Establece los pesos de la Ruta.
+     * @param route
+     */
     public static void setWeights(Route route) {
         Nodo startNode = route.getStartNode();
         Nodo endNode = route.getEndNode();
@@ -114,6 +175,12 @@ public class Route {
         route.setWeight(currentWeight);
     }
 
+    /**
+     * Encuentra el camino más corto entre dos nodos
+     * @param startNode
+     * @param endNode
+     * @return
+     */
     public List<Nodo> findShortestPath(Nodo startNode, Nodo endNode) {
         // Initialize the distances map with infinity for all nodes except the start node
         Map<Nodo, Integer> distances = new HashMap<>();
@@ -171,6 +238,11 @@ public class Route {
         return shortestPath;
     }
 
+    /**
+     * Obtiene las rutas vecinas de un nodo.
+     * @param node
+     * @return
+     */
     private List<Route> getNeighboringRoutes(Nodo node) {
         List<Route> neighboringRoutes = new ArrayList<>();
         for (Route route : HelloApplication.routes) {
