@@ -2,7 +2,16 @@ package com.example.proyect33;
 
 import java.util.Arrays;
 
+/**
+ * Esta clase se permite crear aviones y realizar operaciones de clasificación de aviones.
+ */
 public class AirplaneFactory {
+    /**
+     * Crea un avión del tipo especificado en el aeropuerto dado.
+     * @param type
+     * @param airport
+     * @return
+     */
     public Airplane createAirplane(String type, Nodo airport) {
         if (type.equalsIgnoreCase("Airbus A380") && airport.getAvailableSlots() > 0) {
             airport.setAvailableSlots(airport.getAvailableSlots() - 1);
@@ -29,10 +38,20 @@ public class AirplaneFactory {
         }
     }
 
+    /**
+     *
+     Ordena los aviones por nombre en orden ascendente.
+     * @param airplanes
+     */
     public void sortAirplanesByName(Airplane[] airplanes) {
         Arrays.sort(airplanes, (a1, a2) -> a1.getName().compareToIgnoreCase(a2.getName()));
     }
 
+    /**
+     *
+     Ordena los aviones por velocidad en orden ascendente.
+     * @param airplanes
+     */
     public void sortAirplanesByVelocity(Airplane[] airplanes) {
         for (int i = 1; i < airplanes.length; i++) {
             Airplane key = airplanes[i];
@@ -47,6 +66,11 @@ public class AirplaneFactory {
         }
     }
 
+    /**
+     *
+     Ordena los aviones por combustible en orden ascendente.
+     * @param airplanes
+     */
     public void sortAirplanesByFuel(Airplane[] airplanes) {
         int n = airplanes.length;
         int gap = n / 2;
@@ -68,6 +92,10 @@ public class AirplaneFactory {
         }
     }
 
+    /**
+     * Imprime los detalles de los aviones.
+     * @param airplanes
+     */
     public void printAirplanes(Airplane[] airplanes) {
         for (Airplane airplane : airplanes) {
             System.out.println(airplane.getName() + ": Speed - " + airplane.getSpeed() + ", Strength - " +
