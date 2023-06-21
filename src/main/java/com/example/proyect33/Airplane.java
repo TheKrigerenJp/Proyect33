@@ -7,7 +7,7 @@ import java.util.Random;
 public class Airplane {
 
     private Random random;
-    private List<Route> routes;
+    public List<Route> routes;
     private final String name;
     private final Nodo airport;
     private final int speed;

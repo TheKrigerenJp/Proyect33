@@ -7,7 +7,7 @@ public class Route {
     private final Nodo endNode;
     private int weight;
     private final String type;
-    public List<Nodo> nodes;
+    public static List<Nodo> nodes;
     private int danger;
 
     public Route(Nodo startNode, Nodo endNode, String type) {
@@ -48,31 +48,36 @@ public class Route {
     }
 
 
-    public List<Route> routes;
+    public static List<Route> routes;
 
     public void addNode(Nodo node) {
         nodes.add(node);
     }
 
-    public void generateRandomRoutes() {
+    public static void generateRandomRoutes() {
         Random random = new Random();
-        int numNodes = nodes.size();
+        int min = 1;
+        int randomNumber;
+        int numNodes = HelloApplication.nodes.size();
 
         for (int i = 0; i < numNodes; i++) {
-            Nodo startNode = nodes.get(i);
+            randomNumber = random.nextInt(HelloApplication.nodes.size() - min +1);
+            Nodo startNode = HelloApplication.nodes.get(randomNumber);
 
             for (int j = i + 1; j < numNodes; j++) {
-                Nodo endNode = nodes.get(j);
+                randomNumber = random.nextInt(HelloApplication.nodes.size() - min +1);
+                Nodo endNode = HelloApplication.nodes.get(randomNumber);
 
                 String type = getRandomRouteType();
 
                 Route route = new Route(startNode, endNode, type);
-                routes.add(route);
+                setWeights(route);
+                HelloApplication.routes.add(route);
             }
         }
     }
 
-    private String getRandomRouteType() {
+    private static String getRandomRouteType() {
         String[] routeTypes = {"Continental", "Interoceanica"};
         Random random = new Random();
         int index = random.nextInt(routeTypes.length);
@@ -85,7 +90,7 @@ public class Route {
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    private void setWeights(Route route) {
+    public static void setWeights(Route route) {
         Nodo startNode = route.getStartNode();
         Nodo endNode = route.getEndNode();
         int currentWeight = (int) calculateDistance(startNode.getRow(), startNode.getCol(), endNode.getRow(), endNode.getCol());
@@ -112,7 +117,7 @@ public class Route {
     public List<Nodo> findShortestPath(Nodo startNode, Nodo endNode) {
         // Initialize the distances map with infinity for all nodes except the start node
         Map<Nodo, Integer> distances = new HashMap<>();
-        for (Nodo node : nodes) {
+        for (Nodo node : HelloApplication.nodes) {
             distances.put(node, Integer.MAX_VALUE);
         }
         distances.put(startNode, 0);
@@ -168,7 +173,7 @@ public class Route {
 
     private List<Route> getNeighboringRoutes(Nodo node) {
         List<Route> neighboringRoutes = new ArrayList<>();
-        for (Route route : routes) {
+        for (Route route : HelloApplication.routes) {
             if (route.getStartNode().equals(node)) {
                 neighboringRoutes.add(route);
             }
